@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: "Montserrat" sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    background-image: url(../Assets/background_login.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.wrapper {
+    height: auto;
+    width: 25em;
+    margin: 2em auto;
+    padding: 2em 10em;
+    border: 0.5em solid darkgreen;
+    border-radius: 4em;
+    background-color: transparent;
+    backdrop-filter: blur(40px);
+    box-shadow: 10px 10px 7px rgb(64, 64, 64);
+
+}
+
+.wrapper h1 {
+    text-align: center;
+    color: darkgreen;
+}
+
+form {
+    margin: 1em auto;
+    display: flex;
+    flex-direction: column;
+    width: 20em;
+}
+
+.login {
+    padding: 1em 1em;
+    margin:1em 0;
+    border: 2px solid grey;
+    border-radius: 1em;
+}
+
+button[type=submit]{
+    color: white;
+    font-weight: bold;
+    padding: 1em 1em;
+    margin: 2em 0 1em 0;
+    border: 0.1em solid rgb(252, 190, 43);
+    border-radius: 1em;
+    background-color: darkgreen;
+}
+
+button[type=submit]:hover {
+    background-color: rgb(252, 190, 43);
+    color: darkgreen;
+    border-color: rgb(252, 190, 43);
+}
+
+.q{
+    text-align: center;
+}
+span {
+    display: inline;
+}
+
+.chng-action {
+    font-weight: bold;
+    text-decoration: underline;
+    color: rgb(0, 66, 0);
+}
+
+.chng-action:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.wr_log {
+    color:red;
+}
+
+.dp {
+    color: red;
+}
+
+.ex {
+    color:red;
+}
