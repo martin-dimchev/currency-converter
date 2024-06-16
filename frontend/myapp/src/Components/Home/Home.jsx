@@ -1,16 +1,16 @@
 import React, {useState, useEffect} from "react";
 import "./Home.css";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Home = () => {
-
+    const navigate = useNavigate();
     const [from_currency, setFromCurrency] = useState('EUR')
     const [to_currency, setToCurrency] = useState('EUR')
-    const [amount, setAmount]  = useState(0)
-    const [conv_value, setConvValue] = useState(0)
+    const [amount, setAmount]  = useState('')
+    const [conv_value, setConvValue] = useState('')
     const [loggedIn, setLoggedIn] = useState(false)
-    const [LogIn, setLogIn] = useState('Log In')
     const [username, setUsername] = useState('')
 
     const location = useLocation();
@@ -23,17 +23,19 @@ const Home = () => {
       }, [location.state]);
       
       useEffect(() => {
-        if (location.state && location.state.username) {
+        if (location.state != null) {
           setUsername(location.state.username);
+        } else {
+            setUsername('');
         }
       }, [location.state]);
       
       console.log(username);
+
     const sendData = async (a, b, c, d) => {
         const data = { "from": a, "to": b, "amount": c, "username": d };
         
-            const res = await fetch('http://localhost:5001/login/api', {  // Changed port to 3000
-                mode: 'cors',
+            const res = await fetch('http://localhost:5001/converter/api', {  // Changed port to 3000
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -42,17 +44,20 @@ const Home = () => {
             });
             const result = await res.json();
             setConvValue(result.result);
-    }
+    };
 
+    const goToAllCurrencies = () => {
+        navigate("/allcurrencies", {state:{loggedIn:loggedIn, username: username}})
+    };
     
     
     return (
         <div>
         <nav id="navbar">
                 <a href="/">Home</a>
-                <a href="/allcurrencies">All currencies</a>
-                <a href="/history" className={!loggedIn?"hidden":""}>History</a>
-                <a href="/login" onClick={()=>{if (loggedIn) {setLoggedIn(false); setLogIn('Log In') } else {setLoggedIn(true); setLogIn('Log Out')}}}>{loggedIn?'Log Out':'Log In'}</a>
+                <a href="/allcurrencies" onClick={()=>goToAllCurrencies()}>All currencies</a>
+                <a href="/history" className={!loggedIn?'hidden':''}>History</a>
+                <a href="/login" onClick={()=>{if (loggedIn) {setLoggedIn(false);} else {setLoggedIn(true); }}}>{loggedIn?'Log Out':'Log In'}</a>
                
             </nav>
         <div className="home">
@@ -91,9 +96,9 @@ const Home = () => {
                 <div className="to">
                 <span>Converted to</span>
                 <div>
-                <input type="text" disabled value={conv_value}/>
+                <input type="text" disabled="true" value={conv_value}/>
                 <select name="currency" id="to-currency" value={to_currency} onChange={(e)=>setToCurrency(e.target.value)}>
-                <option value="BGN">BGN</option>
+                    <option value="BGN">BGN</option>
                     <option value="USD">USD</option>
                     <option value="EUR">EUR</option>
                     <option value="JPY">JPY</option>
@@ -116,7 +121,7 @@ const Home = () => {
                 </select>
                 </div>
                 </div>
-                <button className="convert-btn"  onClick={()=>{if (loggedIn) {sendData(from_currency, to_currency, 'martin')} else {alert("Please log in!")}}}>Convert</button>
+                <button className="convert-btn"  onClick={()=>{if(loggedIn){sendData(from_currency, to_currency, amount, username); console.log(from_currency, to_currency, amount, username);}else{alert('pedars')}}}>Convert</button>
                 
             </div>
         </div>

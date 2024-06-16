@@ -18,7 +18,6 @@ const LoginSignUp = () => {
     async function send_login_user_data (username, password) {
             const login_data = {username, password}
             const login_response = await fetch('http://localhost:5001/login/api',{
-                mode: 'cors',
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -42,7 +41,6 @@ const LoginSignUp = () => {
             }
             const signup_data = {username, email, password, confPassword}
             const signup_response = await fetch('http://localhost:5001/login/api', {
-                mode: 'cors',
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
