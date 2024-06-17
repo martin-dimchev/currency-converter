@@ -31,7 +31,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.post('/converter/api',async (req: Request, res: Response) => {
+app.post('/api/converter',async (req: Request, res: Response) => {
     const data = req.body;
     console.log('Data received:', data);
     const user_conv = data.username
@@ -46,7 +46,7 @@ app.post('/converter/api',async (req: Request, res: Response) => {
     res.send(JSON.stringify({result: result.toFixed(2)}));
 });
 
-app.post('/login/api', async (req: Request, res: Response) => {
+app.post('/api/login', async (req: Request, res: Response) => {
     const login_data = req.body
     const l_username = login_data.username
     const l_password = login_data.password
@@ -54,7 +54,7 @@ app.post('/login/api', async (req: Request, res: Response) => {
     res.send(JSON.stringify(login_flag));
 });
 
-app.post('/signup/api', async (req: Request, res: Response) => {
+app.post('/api/signup', async (req: Request, res: Response) => {
     const signup_data = req.body;
     const s_username = signup_data.username
     const s_password = signup_data.password
@@ -68,6 +68,25 @@ app.post('/signup/api', async (req: Request, res: Response) => {
     }
 })
 
+app.get('/api/currencies', async (req: Request, res: Response) => {
+    const data = await CurrencyController.getAllCurrencies()
+    res.send(JSON.stringify(data))
+})
+
+app.get('/api/accountlogs/:username', async (req: Request, res: Response) => {
+    console.log(req.params.username);
+    
+    const username = req.params.username
+    console.log(username)
+    res.send(JSON.stringify(await UserController.getUserLogs(username)))
+})
+
+app.delete('/api/accountlogs/:username', async (req: Request, res: Response) => {
+    const username = req.params.username
+    console.log(username);
+    res.send(JSON.stringify(await (UserController.deleteUserLogs(username))))
+})
+
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:5001`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });

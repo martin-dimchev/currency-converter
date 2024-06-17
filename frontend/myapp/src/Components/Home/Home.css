@@ -11,8 +11,7 @@ input:disabled{
 }
 
 .home-wrapper {
-    margin-top: -7.35%;
-    padding-top: 90px;
+    padding-top: 0px;
     padding-bottom: 20px;
     text-align: center;
     background-color: rgb(22, 51, 0);
@@ -112,4 +111,44 @@ input:disabled{
     display: flex;
     flex-direction: column;
     text-align: left;
+}
+
+@media (max-width: 1280px) {
+    .the-converter {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .home h1 {
+        font-size: 50px;
+    }
+}
+
+@media (max-width: 700px) {
+    .the-converter {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .the-converter input {
+        font-size: 16px;
+        padding: 0.48rem 1.0rem 0.4rem 1.0rem
+    }
+
+    .the-converter select {
+        font-size: 16px;
+        padding: 0.48rem 0.8rem 0.4rem 0.8rem
+    }
+
+    #navbar {
+        justify-content: space-evenly;
+        display: flex;
+        flex-direction: row;
+        
+        padding: 0;
+    }
+
+    .home h1 {
+        font-size: 40px;
+    }
 }

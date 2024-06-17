@@ -11,4 +11,10 @@ export class CurrencyController {
         const currency: ICurrency = await model.getInfo(`${c_code}`);
         return currency;
     }
+
+    static async getAllCurrencies () {
+        const model: CurrencyModel = new CurrencyModel
+        const currencies: [ICurrency] = await model.getAllCurrencies()
+        return currencies;
+    }
 }

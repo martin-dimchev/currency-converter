@@ -17,7 +17,7 @@ const LoginSignUp = () => {
 
     async function send_login_user_data (username, password) {
             const login_data = {username, password}
-            const login_response = await fetch('http://localhost:5001/login/api',{
+            const login_response = await fetch('http://localhost:5001/api/login',{
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -40,7 +40,7 @@ const LoginSignUp = () => {
                 setDiffPass(false)
             }
             const signup_data = {username, email, password, confPassword}
-            const signup_response = await fetch('http://localhost:5001/login/api', {
+            const signup_response = await fetch('http://localhost:5001/api/signup', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'

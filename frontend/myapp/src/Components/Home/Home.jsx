@@ -34,8 +34,11 @@ const Home = () => {
 
     const sendData = async (a, b, c, d) => {
         const data = { "from": a, "to": b, "amount": c, "username": d };
-        
-            const res = await fetch('http://localhost:5001/converter/api', {  // Changed port to 3000
+            if (isNaN(c)){
+                setConvValue(0)
+                return 
+            }
+            const res = await fetch('http://localhost:5001/api/converter', {  // Changed port to 3000
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,17 +49,18 @@ const Home = () => {
             setConvValue(result.result);
     };
 
-    const goToAllCurrencies = () => {
-        navigate("/allcurrencies", {state:{loggedIn:loggedIn, username: username}})
+    const goToPage = (ep) => {
+        navigate(ep, {state:{loggedIn:loggedIn, username: username}})
     };
     
     
     return (
         <div>
+        
         <nav id="navbar">
-                <a href="/">Home</a>
-                <a href="/allcurrencies" onClick={()=>goToAllCurrencies()}>All currencies</a>
-                <a href="/history" className={!loggedIn?'hidden':''}>History</a>
+                <a onClick={()=>{goToPage('/')}}>Home</a>
+                <a onClick={()=>{goToPage(`/allcurrencies/${username}`)}}>All currencies</a>
+                <a onClick={()=>{goToPage(`/history/${username}`)}} className={!loggedIn?'hidden':''}>History</a>
                 <a href="/login" onClick={()=>{if (loggedIn) {setLoggedIn(false);} else {setLoggedIn(true); }}}>{loggedIn?'Log Out':'Log In'}</a>
                
             </nav>
@@ -121,7 +125,7 @@ const Home = () => {
                 </select>
                 </div>
                 </div>
-                <button className="convert-btn"  onClick={()=>{if(loggedIn){sendData(from_currency, to_currency, amount, username); console.log(from_currency, to_currency, amount, username);}else{alert('pedars')}}}>Convert</button>
+                <button className="convert-btn"  onClick={()=>{if(loggedIn){sendData(from_currency, to_currency, amount, username); console.log(from_currency, to_currency, amount, username);}else{alert('Please, login')}}}>Convert</button>
                 
             </div>
         </div>

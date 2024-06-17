@@ -1,0 +1,11 @@
+.history {
+    margin: 0 auto;
+    text-align: center;
+}
+.history h1 {
+    color: rgb(153, 232, 112);
+    margin: 2em auto;
+    text-align: center;
+    font-weight: bold;
+}
+

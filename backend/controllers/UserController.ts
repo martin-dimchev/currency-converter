@@ -35,4 +35,14 @@ export class UserController {
         const res = await model.logConversion(coverted_from, from_amount, converted_to, to_amount, usernmame)
         return res;
     }
+
+    static async getUserLogs(username: any) {
+        const model: UserModel = new UserModel;
+        return await(model.getLogs(username))
+    }
+
+    static async deleteUserLogs(username:any) {
+        const model: UserModel = new UserModel;
+        return await(model.deleteLogs(username))
+    }
 }

@@ -30,4 +30,15 @@ export class UserModel extends Database {
         await this.connection.query("INSERT INTO accounts_history(converted_from, from_amount, converted_to, to_amount, account_id) VALUES (?, ?, ?, ?, ?)", [converted_from, from_amount, converted_to, to_amount, account_id])
         return 'Done;'
     }
+
+    async getLogs (username: any) {
+        const [results] = await this.connection.query<RowDataPacket[]>("SELECT * FROM accounts_history WHERE account_id=(SELECT id FROM accounts WHERE username=?)", [username])
+        return results;
+    }
+
+    async deleteLogs (username: any) {
+        const res = await this.connection.query("DELETE from accounts_history WHERE account_id=(SELECT id FROM accounts WHERE username=?)", [username])
+        return res;
+    }
+
 }
