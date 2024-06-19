@@ -13,10 +13,9 @@ app.use(bodyParser.json());
 
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:3000/login'];
 
-// CORS configuration
+
 const corsOptions = {
     origin: function (origin: any, callback: any) {
-        // Allow requests with no origin, like mobile apps or curl requests
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) !== -1) {
             callback(null, true);
@@ -26,23 +25,21 @@ const corsOptions = {
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true // Enable credentials if needed
+    credentials: true
 };
 
 app.use(cors(corsOptions));
 
 app.post('/api/converter',async (req: Request, res: Response) => {
     const data = req.body;
-    console.log('Data received:', data);
     const user_conv = data.username
     const currency_from:string = data.from;
     const currency_to:string = data.to;
     const amount = data.amount
     const from_currency_usd = (await CurrencyController.getInfo(currency_from)).value_in_usd;
     const to_currency_usd = (await CurrencyController.getInfo(currency_to)).value_in_usd;
-    console.log(from_currency_usd);
     const result = amount * from_currency_usd / to_currency_usd
-    console.log(await UserController.logConversion(currency_from, amount, currency_to, result, user_conv))
+    await UserController.logConversion(currency_from, amount, currency_to, result, user_conv)
     res.send(JSON.stringify({result: result.toFixed(2)}));
 });
 
@@ -74,16 +71,12 @@ app.get('/api/currencies', async (req: Request, res: Response) => {
 })
 
 app.get('/api/accountlogs/:username', async (req: Request, res: Response) => {
-    console.log(req.params.username);
-    
     const username = req.params.username
-    console.log(username)
     res.send(JSON.stringify(await UserController.getUserLogs(username)))
 })
 
 app.delete('/api/accountlogs/:username', async (req: Request, res: Response) => {
     const username = req.params.username
-    console.log(username);
     res.send(JSON.stringify(await (UserController.deleteUserLogs(username))))
 })
 

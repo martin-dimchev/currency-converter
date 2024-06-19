@@ -65,7 +65,7 @@ const History = () => {
             <th>CURR</th>
             <th>TO</th>
             <th>CURR</th>
-            <th>TIME</th>
+            <th>TIME (UTC)</th>
         </tr>
     </thead>
 
